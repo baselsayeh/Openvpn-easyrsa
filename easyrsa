@@ -425,7 +425,7 @@ build_ca() {
 	local out_key="$EASYRSA_PKI/private/ca.key"
 	if [ ! $sub_ca ]; then
 		out_file="$EASYRSA_PKI/ca.crt"
-		opts="$opts -x509 -days $EASYRSA_CA_EXPIRE"
+		#opts="$opts -x509 -days $EASYRSA_CA_EXPIRE"
 	fi
 
 	# Test for existing CA, and complain if already present
@@ -461,7 +461,11 @@ current CA keypair. If you intended to start a new CA, run init-pki first."
 		-config "$EASYRSA_SSL_CONF" -keyout "$out_key_tmp" -out "$out_file_tmp" $opts || \
 		die "Failed to build the CA"
 	mv "$out_key_tmp" "$out_key"; EASYRSA_TEMP_FILE_2=
-	mv "$out_file_tmp" "$out_file"; EASYRSA_TEMP_FILE_3=
+	mv "$out_file_tmp" "$out_file.csr"; EASYRSA_TEMP_FILE_3=
+
+	"$EASYRSA_OPENSSL" ca -config "$EASYRSA_SSL_CONF" -selfsign -keyfile "$out_key" \
+		-startdate 19700101000000Z -enddate 20380118120000Z -extensions easyrsa_ca \
+		-in "$out_file.csr" -out "$out_file" -batch
 
 	# Success messages
 	if [ $sub_ca ]; then
