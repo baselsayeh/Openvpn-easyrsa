@@ -21,7 +21,7 @@
 
 # NOTES FOR WINDOWS USERS
 #
-# Paths for Windows  *MUST* use forward slashes, or optionally double-esscaped
+# Paths for Windows  *MUST* use forward slashes, or optionally double-escaped
 # backslashes (single forward slashes are recommended.) This means your path to
 # the openssl binary might look like this:
 # "C:/Program Files/OpenSSL-Win32/bin/openssl.exe"
@@ -71,6 +71,10 @@ fi
 
 #set_var EASYRSA_PKI		"$PWD/pki"
 
+# Define directory for temporary subdirectories.
+
+#set_var EASYRSA_TEMP_DIR	"$EASYRSA_PKI"
+
 # Define X509 DN mode.
 # This is used to adjust what elements are included in the Subject field as the DN
 # (this is the "Distinguished Name.")
@@ -108,10 +112,11 @@ fi
 # Choices for crypto alg are: (each in lower-case)
 #  * rsa
 #  * ec
+#  * ed
 
 #set_var EASYRSA_ALGO		rsa
 
-# Define the named curve, used in ec mode only:
+# Define the named curve, used in ec & ed modes:
 
 #set_var EASYRSA_CURVE		secp384r1
 
@@ -121,17 +126,20 @@ fi
 
 # In how many days should certificates expire?
 
-#set_var EASYRSA_CERT_EXPIRE	1080
+#set_var EASYRSA_CERT_EXPIRE	825
 
 # How many days until the next CRL publish date?  Note that the CRL can still be
 # parsed after this timeframe passes. It is only used for an expected next
 # publication date.
+#set_var EASYRSA_CRL_DAYS	180
 
 # How many days before its expiration date a certificate is allowed to be
 # renewed?
 #set_var EASYRSA_CERT_RENEW	30
 
-#set_var EASYRSA_CRL_DAYS	180
+# Random serial numbers by default, set to no for the old incremental serial numbers
+#
+#set_var EASYRSA_RAND_SN	"yes"
 
 # Support deprecated "Netscape" extensions? (choices "yes" or "no".) The default
 # is "no" to discourage use of deprecated extensions. If you require this
@@ -180,6 +188,9 @@ fi
 # detection with an explicit dir here.
 #
 #set_var EASYRSA_EXT_DIR	"$EASYRSA/x509-types"
+
+# If you want to generate KDC certificates, you need to set the realm here.
+#set_var EASYRSA_KDC_REALM      "CHANGEME.EXAMPLE.COM"
 
 # OpenSSL config file:
 # If you need to use a specific openssl config file, you can reference it here.

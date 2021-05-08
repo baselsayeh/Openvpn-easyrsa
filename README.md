@@ -2,7 +2,7 @@
 
 easy-rsa is a CLI utility to build and manage a PKI CA. In laymen's terms,
 this means to create a root certificate authority, and request and sign 
-certificates, including sub-CAs and certificate revocation lists (CRL).
+certificates, including intermediate CAs and certificate revocation lists (CRL).
 
 # Downloads
 
@@ -49,4 +49,4 @@ LICENSING info for 3.x is in the [COPYING.md](COPYING.md) file
 
 We are attempting to adhere to the POSIX standard, which can be found here:
 
-http://pubs.opengroup.org/onlinepubs/9699919799/
+https://pubs.opengroup.org/onlinepubs/9699919799/
